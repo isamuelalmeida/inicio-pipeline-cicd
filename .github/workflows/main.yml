@@ -16,4 +16,12 @@ jobs:
        with:
          username: ${{ secrets.DOCKERHUB_USERNAME }}
          password: ${{ secrets.DOCKERHUB_TOKEN }}
+     - name: Build and push da imagem
+       uses: docker/build-push-action@v6
+       with:
+         context: ./src
+         push: true
+         tags: |
+           saiwmon/app-devopspro:v${{ github.run_number }}
+           saiwmon/app-devopspro:latest
        
