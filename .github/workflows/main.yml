@@ -39,12 +39,13 @@ jobs:
    steps:
      - name: Obtendo o código
        uses: actions/checkout@v4.1.7
-     - name: Configure AWSCLIv2 e AWS credentials
-       run: |
-         aws --version
-         export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-         export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         export AWS_SESSION_TOKEN=${{ secrets.AWS_SESSION_TOKEN }}
+     - name: Configure AWS credentials
+       uses: aws-actions/configure-aws-credentials@v2
+       with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+         aws-region: ${{ env.AWS_REGION }}
      - name: Configura kube config
        run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
      - name: Deploy no EKS
