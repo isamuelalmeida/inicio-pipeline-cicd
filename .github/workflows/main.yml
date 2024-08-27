@@ -5,23 +5,51 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+env:
+  AWS_REGION: us-east-1
+  K8S_DEPLOYMENT: web
+  K8S_NAMESPACE: spring-demo
+  EKS_CLUSTER_NAME: cosmos-eks-dev
+  DOCKER_IMAGE: saiwmon/app-devopspro
+  DOCKER_TAG: v${{ github.run_number }}
+
 jobs:
  CI:
    runs-on: ubuntu-latest
    steps:
      - name: Obtendo o código
        uses: actions/checkout@v4.1.7
-     - name: Login to Docker Hub
+     - name: Login no Docker Hub
        uses: docker/login-action@v3
        with:
          username: ${{ secrets.DOCKERHUB_USERNAME }}
          password: ${{ secrets.DOCKERHUB_TOKEN }}
-     - name: Build and push da imagem
+     - name: Build e push da imagem
        uses: docker/build-push-action@v6
        with:
          context: ./src
          push: true
          tags: |
-           saiwmon/app-devopspro:v${{ github.run_number }}
-           saiwmon/app-devopspro:latest
-       
+           ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
+           ${{ env.DOCKER_IMAGE }}:latest
+
+ CD:
+   needs: [CI]
+   runs-on: ubuntu-latest
+   steps:
+     - name: Obtendo o código
+       uses: actions/checkout@v4.1.7
+     - name: Configure AWS credentials
+       uses: aws-actions/configure-aws-credentials@v1
+       with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: ${{env.AWS_REGION}}
+     - name: Configura kube config
+       run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+     - name: Deploy no EKS
+       run: |
+         sed -i 's|image: .*$|image: '"${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}"'|' ./k8s/src/deployment.yaml
+         kubectl apply -f ./k8s/src/deployment.yaml -n ${{ env.K8S_NAMESPACE }}
+     - name: Verificar rollout status
+       run: kubectl rollout status deployment/${{ env.K8S_DEPLOYMENT }} -n ${{ env.K8S_NAMESPACE }}
