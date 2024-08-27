@@ -34,7 +34,7 @@ jobs:
 #            ${{ env.DOCKER_IMAGE }}:latest
 
  CD:
-   needs: [CI]
+#   needs: [CI]
    runs-on: ubuntu-latest
    steps:
      - name: Obtendo o código
