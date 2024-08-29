@@ -34,3 +34,5 @@ jobs:
         env:
           RUNNER_CONTEXT: ${{ toJson(runner) }}
         run: echo "$RUNNER_CONTEXT"
+      - name: Print variável do repo        
+        run: echo ${{ vars.VAR1_CONTEXT }}
