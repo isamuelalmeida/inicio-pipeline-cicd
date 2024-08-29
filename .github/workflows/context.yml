@@ -36,3 +36,9 @@ jobs:
         run: echo "$RUNNER_CONTEXT"
       - name: Print variável do repo        
         run: echo ${{ vars.VAR1_CONTEXT }}
+      - name: Contexto secrets
+        env:
+          RUNNER_SECRETS: ${{ toJson(secrets) }}
+        run: echo "$RUNNER_SECRETS"
+      - name: Print secret do repo        
+        run: echo ${{ secrets.SECRET1_CONTEXT }}
