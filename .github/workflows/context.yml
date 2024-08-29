@@ -41,4 +41,4 @@ jobs:
           RUNNER_SECRETS: ${{ toJson(secrets) }}
         run: echo "$RUNNER_SECRETS"
       - name: Print secret do repo        
-        run: echo ${{ secrets.SECRET1_CONTEXT }}
+        run: echo ${{ secrets.DOCKERHUB_USERNAME }}
