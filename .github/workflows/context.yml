@@ -1,8 +1,9 @@
-name: Variáveis e Contexto
+name: Variáveis de ambiente e Contexto
 
-on: 
-  push:
-      branches: [main]
+on:
+  workflow_dispatch:  
+#  push:
+#    branches: [main]
 
 env:
   ENV_WORKFLOW: "Valor WORKFLOW"
