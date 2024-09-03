@@ -28,7 +28,7 @@ jobs:
       - name: Segunda listagem de arquivos
         run: ls -l
       - name: URL para download dos artefatos
-        run: echo $ {{ steps.upload-artefato.outputs.artifact-url }}
+        run: echo ${{ steps.upload-artefato.outputs.artifact-url }}
 
   download-artefact:
     needs: [upload-artefact]
