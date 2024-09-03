@@ -1,0 +1,45 @@
+name: Exemplo Artifact
+
+on:
+  workflow_dispatch:
+
+env:
+  nome-artefato: teste-artefato
+
+jobs:
+  upload-artefact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Primeira listagem de arquivos
+        run: ls -l
+      - name: Gerar alguns arquivos
+        run: |
+          mkdir artefatos
+          echo "Arquivo de teste01" >> ./artefatos/arq01.txt
+          echo "Arquivo de teste02" >> ./artefatos/arq02.txt
+          echo "Arquivo de teste03" >> ./artefatos/arq03.txt
+      - name: Envio dos arquivos
+        uses: actions/upload-artifact@v4
+        id: upload-artefato
+        with:
+          name: ${{ env.nome-artefato }}
+          path: ./artefatos
+          retention-days: 1
+      - name: Segunda listagem de arquivos
+        run: ls -l
+      - name: URL para download dos artefatos
+        run: echo $ {{ steps.upload-artefato.outputs.artifact-url }}
+
+  download-artefact:
+    needs: [upload-artefact]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Primeira listagem de arquivos
+        run: ls -l
+      - name: Download dos artefatos
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.nome-artefato }}
+      - name: Segunda listagem de arquivos
+        run: ls -l
+    
