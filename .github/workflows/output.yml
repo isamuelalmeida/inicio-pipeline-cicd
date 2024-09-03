@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Exibindo os outputs do gerando_output
-        run |
+        run: |
           echo "Output SHELL: ${{ needs.gerando_output.outputs.output-shell }}"
           echo "Output Senha: ${{ needs.gerando_output.outputs.output-generated-password }}"
 
