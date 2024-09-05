@@ -3,15 +3,17 @@ name: Workflow Evento
 on:
   push:
     branches: ["main", "feature/*"]
-    tags:
-      - "v*"
     paths: 
       - "src/**"
+    tags:
+      - "v*"    
   workflow_dispatch:
     inputs:
       exemplo-input:
         type: string
         description: "Teste de input"
+  pull_request:
+    branches: ["main"]
 
 jobs:
   teste1:
@@ -23,5 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Action2 push
-        run: echo "Action2 com tags..."
-    
+        run: echo "Tag ${GITHUB_REF##*/}"
+  teste3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Action3 pull request
+        run: echo "Evento de pull request"
