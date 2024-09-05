@@ -1,16 +1,25 @@
 name: Workflow Evento
 
 on:
+  push:
+    branches: ["main", "feature/*"]
+    tags:
+      - "v*"
   workflow_dispatch:
     inputs:
       exemplo-input:
         type: string
-        required: true
         description: "Teste de input"
 
 jobs:
   teste1:
     runs-on: ubuntu-latest
     steps:
-      - name: Action teste1
+      - name: Action1 input
         run: echo "Disparou o evento1 com input ${{ inputs.exemplo-input }}"
+  teste2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Action2 push
+        run: echo "Action2 com tags"
+    
