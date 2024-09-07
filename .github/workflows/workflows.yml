@@ -3,18 +3,18 @@ name: Workflow Evento
 on:
   push:
     branches: ["main", "feature/*"]
-  #   paths: 
-  #     - "src/**"
-  #   tags:
-  #     - "v*"    
-  # workflow_dispatch:
-  #   inputs:
-  #     exemplo-input:
-  #       type: string
-  #       description: "Teste de input"
-  #       default: "Valor XPTO"
-  # pull_request:
-  #   branches: ["main"]
+    paths: 
+      - "src/**"
+    tags:
+      - "v*"    
+  workflow_dispatch:
+    inputs:
+      exemplo-input:
+        type: string
+        description: "Teste de input"
+        default: "Valor XPTO"
+  pull_request:
+    branches: ["main"]
   # schedule:
   #   - cron: '0 3 * * *'
 
@@ -27,7 +27,7 @@ jobs:
   teste2:
     runs-on: ubuntu-latest
     steps:
-      - name: Action2 push
+      - name: Action2 equal
         run: echo "${{ github.actor == inputs.exemplo-input }}"
   teste3:
     runs-on: ubuntu-latest
