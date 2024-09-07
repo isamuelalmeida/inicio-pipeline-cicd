@@ -32,5 +32,5 @@ jobs:
   teste3:
     runs-on: ubuntu-latest
     steps:
-      - name: Action3 pull request
-        run: echo "Evento de pull request"
+      - name: Action3 contains
+        run: echo "${{ contains(inputs.exemplo-input, 'teste') }}"
