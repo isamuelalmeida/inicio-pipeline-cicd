@@ -1,46 +1,36 @@
-# name: Workflow Evento
-
-# on:
-#   push:
-#     branches: ["main", "feature/*"]
-#     paths: 
-#       - "src/**"
-#     tags:
-#       - "v*"    
-#   workflow_dispatch:
-#     inputs:
-#       exemplo-input:
-#         type: string
-#         description: "Teste de input"
-#   pull_request:
-#     branches: ["main"]
-
-# jobs:
-#   teste1:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Action1 input
-#         run: echo "Disparou o evento1 com input ${{ inputs.exemplo-input }}"
-#   teste2:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Action2 push
-#         run: echo "Tag ${GITHUB_REF##*/}"
-#   teste3:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Action3 pull request
-#         run: echo "Evento de pull request"
-
-name: Scheduled Workflow
+name: Workflow Evento
 
 on:
-  schedule:
-    - cron: '*/2 * * * *'
+  push:
+    branches: ["main", "feature/*"]
+    paths: 
+      - "src/**"
+    tags:
+      - "v*"    
+  workflow_dispatch:
+    inputs:
+      exemplo-input:
+        type: string
+        description: "Teste de input"
+        default: "Valor XPTO"
+  pull_request:
+    branches: ["main"]
+  # schedule:
+  #   - cron: '0 3 * * *'
 
 jobs:
-  example_job:
+  teste1:
     runs-on: ubuntu-latest
     steps:
-    - name: Run a command
-      run: echo "This job runs daily at 3 AM!"
+      - name: Action1 input
+        run: echo "Disparou o evento1 com input ${{ inputs.exemplo-input }}"
+  teste2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Action2 push
+        run: echo "${{ github.actor == inputs.exemplo-input }}"
+  teste3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Action3 pull request
+        run: echo "Evento de pull request"
