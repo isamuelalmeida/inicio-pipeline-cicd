@@ -1,0 +1,21 @@
+name: Workflow Matriz
+
+on:
+    workflow_dispatch: 
+
+jobs:
+    job1:
+        strategy:
+            matrix:
+                versao: [16, 18, 20]
+                plataforma: ["windows", "ubuntu"]
+        runs-on: "${{ matrix.plataforma }}-latest"
+        steps:
+            - name: Instalação do Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: ${{ matrix.versao }}
+            - name: Exibição da versão
+              run: |
+                node --version
+                echo ${{ runner.os }}
