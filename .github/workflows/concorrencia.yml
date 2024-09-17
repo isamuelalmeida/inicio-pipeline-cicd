@@ -5,6 +5,10 @@ on:
     workflow_dispatch:
 
 concurrency: pipeline-concorrencia
+# É possível executar a concorrência a nível de branch:
+## concurrency:
+##   group: "${{ github.ref }}-${{ github.workflow }}"
+# Também é possível executar concorrência a nível de jobs
 
 jobs:
     job1:
