@@ -2,11 +2,11 @@ name: Workflow Evento
 
 on:
   push:
-    branches: ["main", "feature/*"]
-    paths: 
-      - "src/**"
-    tags:
-      - "v*"    
+    # branches: ["main", "feature/*"]
+    # paths: 
+    #   - "src/**"
+    # tags:
+    #   - "v*"
   workflow_dispatch:
     inputs:
       exemplo-input:
@@ -53,7 +53,10 @@ jobs:
         run: echo "Executando na branch ${{ github.ref }}..."
       - name: Executa um comando errado
         run: echo "lalalala"
-      - name: Envio de erros em caso de falha
+      - name: Executa action em caso de falha
         if: ${{ failure() }}
         run: echo "Enviando erros..."
+      - name: Sempre executa a action 
+        if: ${{ success() || failure() }}
+        run: echo "Enviando status da execução ${{ github.action_status}} ..."
 
