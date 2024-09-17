@@ -51,4 +51,9 @@ jobs:
       - name: Executando nas branchs hotfix
         if: ${{ contains(github.ref, 'hotfix') }}
         run: echo "Executando na branch ${{ github.ref }}..."
+      - name: Executa um comando errado
+        run: lalalala
+      - name: Envio de erros em caso de falha
+        if: ${{ failure() }}
+        run: echo "Enviando erros..."
 
