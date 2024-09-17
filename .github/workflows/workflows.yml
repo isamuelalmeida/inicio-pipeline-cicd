@@ -34,3 +34,10 @@ jobs:
     steps:
       - name: Action3 contains
         run: echo "${{ contains(inputs.exemplo-input, 'teste') }}"
+  apenas-main:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    name: Este job executa somente na branch main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executando na main
+        run: echo "Executando na branch main..."
