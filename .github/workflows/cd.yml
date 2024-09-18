@@ -6,7 +6,6 @@ on:
             ambiente:
                 type: string
                 default: "dev"
-                required: true
 
 jobs:
     deploy-kubernetes:
