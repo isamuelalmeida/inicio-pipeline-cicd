@@ -12,12 +12,6 @@ jobs:
         github.ref_name == 'stage' && 'homologacao' || 
         github.ref_name == 'dev' && 'desenvolvimento'
         }}
-    env:
-      AMBIENTE_DEPLOY: ${{ 
-            github.ref_name == 'main' && 'producao' || 
-            github.ref_name == 'stage' && 'homologacao' || 
-            github.ref_name == 'dev' && 'desenvolvimento'
-            }}
     steps:
       - name: Fake de deploy em ambiente
-        run: echo "Deploy no ambiente de ${{ env.AMBIENTE_DEPLOY }}"
+        run: echo "Deploy no ambiente de ${{ vars.AMBIENTE_DEPLOY }}"
