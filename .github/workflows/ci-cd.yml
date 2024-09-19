@@ -20,11 +20,16 @@ jobs:
               run: echo "Aqui eu executo o teste de software"
             - name: Publicando a Release
               run: echo "Publicação da Relase final"
-    CD:
+    CD-repo-local:
         needs: [CI]
-        uses: isamuelalmeida/inicio-pipeline-cicd/.github/workflows/template-cd.yml@main
+        uses: isamuelalmeida/inicio-pipeline-cicd/.github/workflows/cd.yml@main
         with:
           ambiente: ${{ inputs.ambiente }}
-        # secrets:
-        #   registry_user: ${{ secrets.DOCKERHUB_USERNAME }}
+        secrets:
+          registry_user: ${{ secrets.DOCKERHUB_USERNAME }}
+    CD-repo-remoto:
+        needs: [CI]
+        uses: isamuelalmeida/repo-deploy/.github/workflows/deploy.yml@main
+        with:
+          ambiente: ${{ inputs.ambiente }}
         secrets: inherit

