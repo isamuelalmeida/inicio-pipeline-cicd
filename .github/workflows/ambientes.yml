@@ -1,10 +1,17 @@
 name: CD Fake
 on: 
-    workflow_dispatch: 
+    workflow_dispatch:
+        inputs:
+            ambiente:
+                type: choice
+                options:
+                    - homologacao
+                    - producao
+                required: true
 jobs:
     deploy-fake:
         runs-on: ubuntu-latest
-        environment: homologacao
+        environment: ${{ inputs.ambiente }}
         steps:
             - name: Fake de deploy em ambiente
               run: echo "Deploy no ambiente de ${{ vars.AMBIENTE_DEPLOY }}"
