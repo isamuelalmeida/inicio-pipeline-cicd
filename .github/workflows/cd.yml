@@ -6,10 +6,15 @@ on:
             ambiente:
                 type: string
                 default: "dev"
+        secrets:
+            registry_user:
+                required: true
 
 jobs:
     deploy-kubernetes:
         runs-on: ubuntu-latest
         steps:
             - name: Deploy no ambiente
-              run: echo "Executando o deploy no ambiente de ${{ inputs.ambiente }}"
+              run: |
+                echo "Executando o deploy no ambiente de ${{ inputs.ambiente }}"
+                echo "Usuário do Registry: ${{ secrets.registry_user }}"
