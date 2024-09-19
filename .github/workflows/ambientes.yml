@@ -1,33 +1,23 @@
 name: CD Fake
+
 on: 
-    workflow_dispatch:
-        inputs:
-            ambiente:
-                type: choice
-                options:
-                    - homologacao
-                    - producao
-                required: true
+  workflow_dispatch:
+
 jobs:
-    deploy-fake-input:
-        runs-on: ubuntu-latest
-        environment: ${{ inputs.ambiente }}
-        steps:
-            - name: Fake de deploy em ambiente
-              run: echo "Deploy no ambiente de ${{ vars.AMBIENTE_DEPLOY }}"
-    deploy-fake-dinamico:
-        runs-on: ubuntu-latest
-        environment: ${{ 
-            github.ref == 'refs/heads/main' && 'producao' || 
-            github.ref == 'refs/heads/stage' && 'homologacao' || 
-            github.ref == 'refs/heads/dev' && 'desenvolvimento'
+  deploy-fake-dinamico:
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'main' || github.ref_name == 'stage' || github.ref_name == 'dev'
+    environment: ${{ 
+        github.ref_name == 'main' && 'producao' || 
+        github.ref_name == 'stage' && 'homologacao' || 
+        github.ref_name == 'dev' && 'desenvolvimento'
+        }}
+    env:
+      AMBIENTE_DEPLOY: ${{ 
+            github.ref_name == 'main' && 'producao' || 
+            github.ref_name == 'stage' && 'homologacao' || 
+            github.ref_name == 'dev' && 'desenvolvimento'
             }}
-        env:
-            AMBIENTE_DEPLOY: ${{ 
-                github.ref == 'refs/heads/main' && 'producao' || 
-                github.ref == 'refs/heads/stage' && 'homologacao' || 
-                github.ref == 'refs/heads/dev' && 'desenvolvimento'
-                }}
-        steps:
-            - name: Fake de deploy em ambiente
-              run: echo "Deploy no ambiente de ${{ env.AMBIENTE_DEPLOY }}"
+    steps:
+      - name: Fake de deploy em ambiente
+        run: echo "Deploy no ambiente de ${{ env.AMBIENTE_DEPLOY }}"
