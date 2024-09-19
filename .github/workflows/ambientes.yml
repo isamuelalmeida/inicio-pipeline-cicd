@@ -9,9 +9,25 @@ on:
                     - producao
                 required: true
 jobs:
-    deploy-fake:
+    deploy-fake-input:
         runs-on: ubuntu-latest
         environment: ${{ inputs.ambiente }}
         steps:
             - name: Fake de deploy em ambiente
               run: echo "Deploy no ambiente de ${{ vars.AMBIENTE_DEPLOY }}"
+    deploy-fake-dinamico:
+        runs-on: ubuntu-latest
+        environment: ${{ 
+            github.ref == 'refs/heads/main' && 'producao' || 
+            github.ref == 'refs/heads/stage' && 'homologacao' || 
+            github.ref == 'refs/heads/dev' && 'desenvolvimento'
+            }}
+        env:
+            AMBIENTE_DEPLOY: ${{ 
+                github.ref == 'refs/heads/main' && 'producao' || 
+                github.ref == 'refs/heads/stage' && 'homologacao' || 
+                github.ref == 'refs/heads/dev' && 'desenvolvimento'
+                }}
+        steps:
+            - name: Fake de deploy em ambiente
+              run: echo "Deploy no ambiente de ${{ env.AMBIENTE_DEPLOY }}"
