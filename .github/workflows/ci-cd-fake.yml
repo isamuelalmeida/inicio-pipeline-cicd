@@ -25,5 +25,6 @@ jobs:
         uses: isamuelalmeida/inicio-pipeline-cicd/.github/workflows/cd.yml@main
         with:
           ambiente: ${{ inputs.ambiente }}
-        secrets:
-          registry_user: ${{ secrets.DOCKERHUB_USERNAME }}
+        # secrets:
+        #   registry_user: ${{ secrets.DOCKERHUB_USERNAME }}
+        secrets: inherit
