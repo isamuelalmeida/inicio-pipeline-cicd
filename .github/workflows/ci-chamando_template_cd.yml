@@ -22,7 +22,7 @@ jobs:
               run: echo "Publicação da Relase final"
     CD:
         needs: [CI]
-        uses: isamuelalmeida/inicio-pipeline-cicd/.github/workflows/cd.yml@main
+        uses: isamuelalmeida/inicio-pipeline-cicd/.github/workflows/template-cd.yml@main
         with:
           ambiente: ${{ inputs.ambiente }}
         # secrets:
