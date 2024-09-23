@@ -4,7 +4,7 @@ on:
   workflow_dispatch
 
 jobs:
-  build-test:
+  job-container:
     runs-on: ubuntu-latest
     container:
       image: python:3.10.14-alpine3.20
@@ -23,3 +23,13 @@ jobs:
           ls -la
           uname -a
           cat /etc/os-release
+    action-container:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Observando SO do Runner
+          run: cat /etc/os-release
+        - name: Observando SO do Container
+          uses: docker://debian:trixie
+          with:
+            entrypoint: cat
+            args: /etc/os-release
