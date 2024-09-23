@@ -17,3 +17,9 @@ jobs:
         run: apk add curl
       - name: Executando o curl no google
         run: curl https://www.google.com
+      - name: Verifica info do SO
+        run: |
+          pwd
+          ls -la
+          uname -a
+          cat /etc/os-release
