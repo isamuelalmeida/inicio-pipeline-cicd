@@ -8,8 +8,8 @@ env:
   DOCKER_TAG: v${{ github.run_number }}
 
 jobs:
-  teste:
-    runs-on: ubuntu-latest
+  teste-runner:
+    runs-on: [aws-ec2-1]
     steps:
       - name: Fake task
         run: echo "Teste self runner..."
