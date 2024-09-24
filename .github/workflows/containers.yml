@@ -40,9 +40,12 @@ jobs:
         image: postgres
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: senhasecreta
+          POSTGRES_DB: teste
         ports:
           - 5432:5432
     steps:
       - name: Teste de integração FAKE
-        run: telnet localhost 5432
+        run: psql -h localhost -U postgres -c '\l'
+        env:
+          PGPASSWORD: senhasecreta
