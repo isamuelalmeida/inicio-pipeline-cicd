@@ -5,7 +5,7 @@ on:
 
 jobs:
   job-container:
-    runs-on: ubuntu-latest
+    runs-on: [aws-ec2-1]
     container:
       image: python:3.10.14-alpine3.20
     steps:
@@ -24,7 +24,7 @@ jobs:
           uname -a
           cat /etc/os-release
   action-container:
-    runs-on: ubuntu-latest
+    runs-on: [aws-ec2-1]
     steps:
       - name: Observando SO do Runner
         run: cat /etc/os-release
@@ -34,7 +34,7 @@ jobs:
           entrypoint: cat
           args: /etc/os-release
   job-container-service:
-    runs-on: ubuntu-latest
+    runs-on: [aws-ec2-1]
     services:
       postgres:
         image: postgres
