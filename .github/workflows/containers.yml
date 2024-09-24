@@ -23,29 +23,26 @@ jobs:
           ls -la
           uname -a
           cat /etc/os-release
-          ping google.com -c4
   action-container:
     runs-on: ubuntu-latest
     steps:
       - name: Observando SO do Runner
-        run: |
-          cat /etc/os-release
-          ping google.com -c4
+        run: cat /etc/os-release
       - name: Observando SO do Container
         uses: docker://debian:trixie
         with:
           entrypoint: cat
           args: /etc/os-release
-  # build-test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #       - name: Checkout
-  #         uses: actions/checkout@v4
-  #       - name: Setup .NET
-  #         uses: actions/setup-dotnet@v4
-  #         with:
-  #           dotnet-version: 8.0.x
-  #       - name: Teste de Integração
-  #         env:
-  #           ConnectionStrings__DefaultConnection: "Host=localhost;Database=review;Username=review;Password=Passw0rd2023!"
-  #         run: dotnet test ./src/Review-Filmes.Test.Integration/Review-Filmes.Test.Integration.csproj --verbosity normal 
+  job-container-service:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+    steps:
+      - name: Teste de integração FAKE
+        run: telnet localhost 5432
