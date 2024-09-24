@@ -9,7 +9,6 @@ jobs:
     steps:
       - name: Add mensagens de log
         run: |
-          comando_errado
           echo "::debug:: Mensagem de log debug"
           echo "::warning:: Mensagem de log warning"
           echo "::notice:: Mensagem de log notice"
