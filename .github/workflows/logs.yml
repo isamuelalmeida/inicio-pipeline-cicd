@@ -1,7 +1,9 @@
 name: Teste Logs
 
 on:
-  workflow_dispatch
+  push:
+    branches: ["main"]
+  workflow_dispatch:
 
 jobs:
   job1:
@@ -13,5 +15,4 @@ jobs:
           echo "::warning:: Mensagem de log warning"
           echo "::notice:: Mensagem de log notice"
           echo "::error:: Mensagem de log error"
-          echo "::info:: Mensagem de log info"
         
