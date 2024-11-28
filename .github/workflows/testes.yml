@@ -1,0 +1,15 @@
+name: Testando algumas coisas
+
+on:
+    push:
+    workflow_dispatch: 
+
+jobs:
+    job1:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Executando comandos
+              run: |
+                echo  ${{ github.ref_name }}
+                echo  ${{ github.pull_request.base.ref }}
+                echo  ${{ github.event.pull_request.base.ref }}
