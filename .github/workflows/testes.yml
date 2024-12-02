@@ -8,9 +8,18 @@ on:
 jobs:
     job1:
         runs-on: ubuntu-latest
+        env:
+            IMAGE_REPO: "${{ github.repository }}/${{ github.ref_name }}"
         steps:
-            - name: Executando comandos
+            - name: Image repo original
               run: |
-                echo  ${{ github.ref_name }}
-                echo  ${{ github.pull_request.base.ref }}
-                echo  ${{ github.event.pull_request.base.ref }}
+                echo "Original IMAGE_REPO $IMAGE_REPO"
+                echo "Original IMAGE_REPO ${{ env.IMAGE_REPO }}"
+
+            - name: Modificando Image repo
+              run: echo "IMAGE_REPO=${{ github.repository }}/${{ github.ref_name }}/teste" >> $GITHUB_ENV
+
+            - name: Image repo modificada
+              run: |
+                echo "Modificada IMAGE_REPO $IMAGE_REPO"
+                echo "Modificada IMAGE_REPO ${{ env.IMAGE_REPO }}"
